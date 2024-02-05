@@ -2,7 +2,7 @@
 
 Klipper module that adds a G-code command so Klipper will pause until
 specified endstop is in selected state, triggered or not triggered.
-Alternativley it can querry a specified amount of times.
+Alternativley it can query a specified amount of times.
 
 ## Usage
 
