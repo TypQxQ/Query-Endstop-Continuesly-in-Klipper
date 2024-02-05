@@ -147,7 +147,6 @@ link_extension()
     log_header "Linking extension files to Klipper..."
     ln -sf "${EXTENSION_PATH}/query_endstop_continuesly.py" "${KLIPPER_HOME}/klippy/extras/query_endstop_continuesly.py"
     log_info "Linked extension file: (query_endstop_continuesly.py)"
-    done
 }
 
 # 
@@ -168,13 +167,15 @@ install_update_manager() {
             # Add the configuration to moonraker.conf
             echo "" >> "${dest}"    # Add a blank line
             echo "" >> "${dest}"    # Add a blank line
-            echo -e "[update_manager Query-Endstop-Continuesly]]" >> "${dest}"    # Add the section header
+            echo -e "[update_manager Query-Endstop-Continuesly\]" >> "${dest}"    # Add the section header
             echo -e "type: git_repo" >> "${dest}"
             echo -e "path: ${REPO_DIR}" >> "${dest}"
             echo -e "origin: https://github.com/TypQxQ/Query-Endstop-Continuesly-in-Klipper.git" >> "${dest}"
             echo -e "primary_branch: main" >> "${dest}"
             echo -e "install_script: install.sh" >> "${dest}"
             echo -e "managed_services: klipper" >> "${dest}"
+
+            restart_moonraker
         else
             log_error "[update_manager Query-Endstop-Continuesly]] already exists in moonraker.conf - skipping installing it there"
         fi
@@ -277,7 +278,6 @@ log_blank
 log_header "      Query Endstop Continuesly in Klipper"
 log_blank
 log_blank
-log_important "KTC is used to facilitate toolchanging under Klipper."
 log_important "Klipper module that adds a G-code command so Klipper will"
 log_important "pause until specified endstop is in selected state,"
 log_important "triggered or not triggered. Alternativley it can query a"
@@ -320,9 +320,9 @@ link_extension
 install_update_manager
 
 # Install the configuration to Klipper
-# install_klipper_config
+install_klipper_config
 
 log_blank
 log_blank
-log_important "Query Endstop Continuesly in Klipper extension is now installed.
+log_important "Query Endstop Continuesly in Klipper extension is now installed."
 log_important "Settings can be found in the printer.cfg file."
