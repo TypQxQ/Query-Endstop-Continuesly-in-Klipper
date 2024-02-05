@@ -1,10 +1,9 @@
-# KTC - Klipper Tool Changer code (v.2)
-# GCODE COMMANDS FOR waiting on endstop (Jubilee sytle toollock)
-#
-# Copyright (C) 2024 Andrei Ignat <andrei@ignat.se>
-#
-# This file may be distributed under the terms of the GNU GPLv3 license.
-#
+'''
+Suspend-Klipper-Until-Endstop-State
+Copyright (C) 2024 Andrei Ignat <andrei@ignat.se>
+
+This file may be distributed under the terms of the GNU GPLv3 license.
+'''
 import typing
 
 # Only import these modules for type checking in development.
@@ -16,25 +15,35 @@ if typing.TYPE_CHECKING:
     from .klippy import klippy
     from .klippy.extras import gcode_macro
 
-class SuspendKlipperUntilEndstopHits:
-    """Base class for KTC. Contains common methods and properties."""
+class SuspendKlipperUntilEndstopState:
+    '''Main class for the module. This is the class that is loaded by Klipper.'''
     def __init__(self, config: typing.Optional['configfile.ConfigWrapper'] = None):
-        self.config = config
-        self.printer : 'klippy.Printer' = config.get_printer()
-        self.reactor: 'klippy.reactor.Reactor' = self.printer.get_reactor()
-        self.gcode = typing.cast('gcode.GCodeDispatch', self.printer.lookup_object("gcode"))
+        #Reference the instance attributes
+        self._config = config
+        self.printer = typing.cast('klippy.Printer', config.get_printer())
+        self.reactor = typing.cast('klippy.reactor.Reactor', self.printer.get_reactor())
+        self.gcode = typing.cast('gcode.GCodeDispatch', self.printer.lookup_object('gcode_macro'))
+        self.last_endstop_query = {}
 
-    cmd_KTC_ENDSTOP_QUERY_help = (
+        # Register the GCode command
+        self.gcode.register_command(
+            'KTC_ENDSTOP_QUERY', self.SUSPEND_KLIPPER_UNTIL_ENDSTOP_STATE, 
+            False, self.SUSPEND_KLIPPER_UNTIL_ENDSTOP_STATE_help)
+
+    SUSPEND_KLIPPER_UNTIL_ENDSTOP_STATE_help = (
         "Wait for a ENDSTOP= untill it is TRIGGERED=0/[1] or ATEMPTS=#"
     )
-
-    def cmd_KTC_ENDSTOP_QUERY(self, gcmd):
-        endstop_name = gcmd.get("ENDSTOP")  #'manual_stepper tool_lock'
+    def SUSPEND_KLIPPER_UNTIL_ENDSTOP_STATE(self, gcmd: 'gcode.GCodeCommand'):
+        '''GCode command callback for KTC_ENDSTOP_QUERY. 
+        This is the function that is called when the GCode command is executed.'''
+        endstop_name = gcmd.get("ENDSTOP")
         should_be_triggered = bool(gcmd.get_int("TRIGGERED", 1, minval=0, maxval=1))
         atempts = gcmd.get_int("ATEMPTS", -1, minval=1)
+
         self.query_endstop(endstop_name, should_be_triggered, atempts)
 
     def query_endstop(self, endstop_name, should_be_triggered=True, atempts=-1):
+        '''Query the endstop and wait for it to be triggered or not triggered.'''
         # Get endstops
         endstop = None
         query_endstops = self.printer.lookup_object("query_endstops")
@@ -72,5 +81,12 @@ class SuspendKlipperUntilEndstopHits:
 
         self.last_endstop_query[endstop_name] = is_triggered
 
+    def get_status(self, eventtime=None):   # pylint: disable=unused-argument
+        status = {
+            "last_endstop_query": self.last_endstop_query,
+        }
+        return status
+
 def load_config(config):
-    return SuspendKlipperUntilEndstopHits(config)
+    '''Load the module into Klipper. This is the function that is called by Klipper.'''
+    return SuspendKlipperUntilEndstopState(config)
