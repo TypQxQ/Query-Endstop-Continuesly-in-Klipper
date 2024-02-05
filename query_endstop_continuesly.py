@@ -15,7 +15,7 @@ if typing.TYPE_CHECKING:
     from .klippy import gcode as klippy_gcode
     from .klippy import klippy, toolhead as klippy_th
     from .klippy.extras import query_endstops as klippy_qe
-    
+
 
 class QueryEndstopContinuesly:
     '''Main class for the module. This is the class that is loaded by Klipper.'''
@@ -30,8 +30,8 @@ class QueryEndstopContinuesly:
 
         # Register the GCode command
         self._gcode.register_command(
-            'QUERY_ENDSTOP_CONTINUESLY', self.SUSPEND_KLIPPER_UNTIL_ENDSTOP_STATE, 
-            False, self.SUSPEND_KLIPPER_UNTIL_ENDSTOP_STATE_help)
+            'QUERY_ENDSTOP_CONTINUESLY', self.cmd_QUERY_ENDSTOP_CONTINUESLY, 
+            False, self.QUERY_ENDSTOP_CONTINUESLY_help)
 
     QUERY_ENDSTOP_CONTINUESLY_help = (
         "Query an endstop and wait for it to be triggered or not triggered.\n"
@@ -48,9 +48,9 @@ class QueryEndstopContinuesly:
         "This will query the endstop 'probe' continuesly until it is not triggered"
         ", with a 1 second delay between each query."
         "The command will not return until the endstop is not triggered."
-        
+
     )
-    def cmd_QUERY_ENDSTOP_CONTINUESLY(self, gcmd: 'gcode.GCodeCommand'):
+    def cmd_QUERY_ENDSTOP_CONTINUESLY(self, gcmd: 'klippy_gcode.GCodeCommand'):
         '''GCode command callback for KTC_ENDSTOP_QUERY. 
         This is the function that is called when the GCode command is executed.
         '''
