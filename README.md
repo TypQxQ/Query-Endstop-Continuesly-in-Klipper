@@ -52,7 +52,9 @@ Install by running this command in the shell of your printer running Klipper
 
 ```bash
 #!/bin/bash
-cd ~/ && git clone https://github.com/TypQxQ/Query-Endstop-Continuesly-in-Klipper.git && bash ~/Query-Endstop-Continuesly-in-Klipper/install.sh
+cd ~/
+git clone https://github.com/TypQxQ/Query-Endstop-Continuesly-in-Klipper.git
+bash ~/Query-Endstop-Continuesly-in-Klipper/install.sh
 ```
 
 ### Manual
