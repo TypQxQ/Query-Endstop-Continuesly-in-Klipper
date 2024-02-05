@@ -1,11 +1,10 @@
+# Query Endstop Continuesly in Klipper
 
-Query Endstop Continuesly in Klipper
-
-Klipper module that adds a G-code command so Klipper will pause until 
+Klipper module that adds a G-code command so Klipper will pause until
 specified endstop is in selected state, triggered or not triggered.
 Alternativley it can querry a specified amount of times.
 
-# Usage
+## Usage
 
 Query an endstop and wait for it to be triggered or not triggered.
 
@@ -17,31 +16,31 @@ QUERY_ENDSTOP_CONTINUESLY ENDSTOP= TRIGGERED= ATEMPTS=
  - ATEMPTS= The number of atempts to query the endstop. Default is continuesly.
 ```
 
-# Examples
+## Examples
 
 ```text
 QUERY_ENDSTOP_CONTINUESLY ENDSTOP=probe TRIGGERED=0 ATEMPTS=5
 ```
-This will query the endstop 'probe' 5 times until it is not triggered, with a 
-0.1 second delay between each query. If the endstop is not triggered after 5 
-atempts, the command will return. If the endstop is triggered before 5 
+This will query the endstop 'probe' 5 times until it is not triggered, with a
+0.1 second delay between each query. If the endstop is not triggered after 5
+atempts, the command will return. If the endstop is triggered before 5
 atempts, the command will return.
 ```text
 QUERY_ENDSTOP_CONTINUESLY ENDSTOP=probe TRIGGERED=0\
 ```
-This will query the endstop 'probe' continuesly until it is not triggered, 
+This will query the endstop 'probe' continuesly until it is not triggered,
 with a 1 second delay between each query. The command will not return until the
  endstop is not triggered.
 
-# Query results
+## Query results
 
-The result can be accessed in GCode macros and other modules under the 
+The result can be accessed in GCode macros and other modules under the
 `printer` object.
 ```text
 printer.query_endstop_continuesly.last_endstop_query['probe'] : False
 ```
 
-# Installation
+## Installation
 
 Install by running this command in the shell of your printer running Klipper
 ```bash
@@ -49,10 +48,9 @@ Install by running this command in the shell of your printer running Klipper
 echo Hello world
 ```
 
+## This is migrated from Klipper Toolchanger code
 
-# This is migrated from Klipper Toolchanger code.
-
-It can for example be used by a Jubilee style toolchanger to check if tool is 
+It can for example be used by a Jubilee style toolchanger to check if tool is
 locked and pause a print until it is.
-This is also usefull for other toolchangers that check if a tool is mounted or 
+This is also usefull for other toolchangers that check if a tool is mounted or
 parked with endstops.
