@@ -280,7 +280,7 @@ log_blank
 log_important "KTC is used to facilitate toolchanging under Klipper."
 log_important "Klipper module that adds a G-code command so Klipper will"
 log_important "pause until specified endstop is in selected state,"
-log_important "triggered or not triggered. Alternativley it can querry a"
+log_important "triggered or not triggered. Alternativley it can query a"
 log_important "specified amount of times."
 log_blank
 log_info "Usage: $0 [-k <klipper_home_dir>] [-c <klipper_config_dir>] [-m <moonraker_home_dir>]"
