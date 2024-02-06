@@ -9,7 +9,7 @@ import typing
 # Only import these modules for type checking in development.
 # Need to add path to Klipper to the Type Checker in VSCode settings.
 # Link the klippy folder to the klippy folder in the Klipper source code like so:
-# ln -s ~/klipper/klippy/ ~/Suspend-Klipper-Until-Endstop-Triggers/klippy
+# ln -s ~/klipper/klippy/ ~/Query-Endstop-Continuesly-in-Klipper/klippy
 if typing.TYPE_CHECKING:
     from .klippy import configfile as klippy_cf, mcu as klippy_mcu
     from .klippy import gcode as klippy_gcode
@@ -25,7 +25,7 @@ class QueryEndstopContinuesly:
         self._reactor = typing.cast('klippy.reactor.Reactor',
                                    self._printer.get_reactor())
         self._gcode = typing.cast('klippy_gcode.GCodeDispatch',
-                                 self._printer.lookup_object('gcode_macro'))
+                                 self._printer.lookup_object('gcode'))
         self.last_endstop_query = {}
 
         # Register the GCode command
