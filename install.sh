@@ -156,8 +156,8 @@ install_update_manager() {
     log_blank
     log_header "Adding update manager to moonraker.conf"
     dest=${KLIPPER_CONFIG_HOME}/moonraker.conf
-    if test -f $dest; then
-        already_included=$(grep -c '\[update_manager Query-Endstop-Continuesly\]' ${dest} || true)
+    if test -f "$dest"; then
+        already_included=$(grep -c '\[update_manager Query-Endstop-Continuesly\]' "${dest}" || true)
         if [ "${already_included}" -eq 0 ]; then
             # Backup the original  moonraker.conf file
             next_dest="$(nextfilename "$dest")"
@@ -196,7 +196,7 @@ install_klipper_config() {
         # Backup the original printer.cfg file
         next_dest="$(nextfilename "$dest")"
         log_info "Copying original printer.cfg file to ${next_dest}"
-        cp ${dest} ${next_dest}
+        cp "${dest}" "${next_dest}"
 
         # Add the configuration to printer.cfg
         # This example assumes that that both the server and the webcam stream are running on the same machine as Klipper
