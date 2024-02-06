@@ -132,9 +132,9 @@ verify_ready()
 function nextfilename {
     local name="$1"
     if [ -d "${name}" ]; then
-        printf "%s-%s" ${name%%.*} $(date '+%Y%m%d_%H%M%S')
+        printf "%s-%s" "${name%%.*}" "$(date '+%Y%m%d_%H%M%S')"
     else
-        printf "%s-%s.%s-old" ${name%%.*} $(date '+%Y%m%d_%H%M%S') ${name#*.}
+        printf "%s-%s.%s-old" "${name%%.*}" "$(date '+%Y%m%d_%H%M%S')" "${name#*.}"
     fi
 }
 
@@ -162,12 +162,12 @@ install_update_manager() {
             # Backup the original  moonraker.conf file
             next_dest="$(nextfilename "$dest")"
             log_info "Copying original moonraker.conf file to ${next_dest}"
-            cp ${dest} ${next_dest}
+            cp "${dest}" "${next_dest}"
 
             # Add the configuration to moonraker.conf
             echo "" >> "${dest}"    # Add a blank line
             echo "" >> "${dest}"    # Add a blank line
-            echo -e "[update_manager Query-Endstop-Continuesly\]" >> "${dest}"    # Add the section header
+            echo -e "[update_manager Query-Endstop-Continuesly]" >> "${dest}"    # Add the section header
             echo -e "type: git_repo" >> "${dest}"
             echo -e "path: ${REPO_DIR}" >> "${dest}"
             echo -e "origin: https://github.com/TypQxQ/Query-Endstop-Continuesly-in-Klipper.git" >> "${dest}"
@@ -200,7 +200,7 @@ install_klipper_config() {
 
         # Add the configuration to printer.cfg
         # This example assumes that that both the server and the webcam stream are running on the same machine as Klipper
-        already_included=$(grep -c '\[query_endstop_continuesly\]' ${dest} || true)
+        already_included=$(grep -c '\[query_endstop_continuesly\]' "${dest}" || true)
         if [ "${already_included}" -eq 0 ]; then
             echo "" >> "${dest}"    # Add a blank line
             echo "" >> "${dest}"    # Add a blank line
