@@ -192,7 +192,7 @@ install_klipper_config() {
 
     # Add configuration to printer.cfg if it doesn't exist
     dest=${KLIPPER_CONFIG_HOME}/printer.cfg
-    if test -f $dest; then
+    if test -f "$dest"; then
         # Backup the original printer.cfg file
         next_dest="$(nextfilename "$dest")"
         log_info "Copying original printer.cfg file to ${next_dest}"
