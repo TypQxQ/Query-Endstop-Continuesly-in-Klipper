@@ -11,10 +11,10 @@ import typing
 # Link the klippy folder to the klippy folder in the Klipper source code like so:
 # ln -s ~/klipper/klippy/ ~/Query-Endstop-Continuesly-in-Klipper/klippy
 if typing.TYPE_CHECKING:
-    from .klippy import configfile as klippy_cf, mcu as klippy_mcu
-    from .klippy import gcode as klippy_gcode
-    from .klippy import klippy, toolhead as klippy_th
-    from .klippy.extras import query_endstops as klippy_qe
+    from ..klipper.klippy import configfile as klippy_cf, mcu as klippy_mcu
+    from ..klipper.klippy import gcode as klippy_gcode
+    from ..klipper.klippy import klippy, toolhead as klippy_th
+    from ..klipper.klippy.extras import query_endstops as klippy_qe
 
 
 class QueryEndstopContinuesly:
@@ -50,7 +50,7 @@ class QueryEndstopContinuesly:
         "The command will not return until the endstop is not triggered."
 
     )
-    def cmd_QUERY_ENDSTOP_CONTINUESLY(self, gcmd: 'klippy_gcode.GCodeCommand'):
+    def cmd_QUERY_ENDSTOP_CONTINUESLY(self, gcmd: 'klippy_gcode.GCodeCommand'):  # pylint: disable=invalid-name
         '''GCode command callback for KTC_ENDSTOP_QUERY. 
         This is the function that is called when the GCode command is executed.
         '''
@@ -83,7 +83,7 @@ class QueryEndstopContinuesly:
                 endstop = typing.cast('klippy_mcu.MCU_endstop', es)
                 break
         if endstop is None:
-            raise self._printer.command_error("Unknown endstop '%s'" % (endstop_name))
+            raise self._printer.command_error(f"Unknown endstop '{endstop_name}'")
 
         # If atempts is -1 then we are running continuesly.
         dwell = 0.1
@@ -91,7 +91,8 @@ class QueryEndstopContinuesly:
             dwell = 1.0
 
         a = 0   # Counter for the number of atempts
-        while not self._printer.is_shutdown():
+        # while not self._printer.is_shutdown()
+        while self._printer.get_state_message()[1] == "ready":
             a += 1
             last_move_time = toolhead.get_last_move_time()
             is_triggered = bool(endstop.query_endstop(last_move_time))
