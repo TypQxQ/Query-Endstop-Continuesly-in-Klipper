@@ -48,14 +48,10 @@ printer.query_endstop_continuesly.last_endstop_query['probe'] : False
 
 ### Automatic
 
-Install by running this command in the shell of your printer running Klipper
+Install by connecting to your klipper machine using SSH and run this one line command:
 
 ```bash
-#!/bin/bash
-cd ~/
-git clone https://github.com/TypQxQ/Query-Endstop-Continuesly-in-Klipper.git
-bash ~/Query-Endstop-Continuesly-in-Klipper/install.sh
-```
+cd ~/ && git clone https://github.com/TypQxQ/Query-Endstop-Continuesly-in-Klipper.git && bash ~/Query-Endstop-Continuesly-in-Klipper/install.sh```
 
 ### Manual
 
