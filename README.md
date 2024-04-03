@@ -51,7 +51,8 @@ printer.query_endstop_continuesly.last_endstop_query['probe'] : False
 Install by connecting to your klipper machine using SSH and run this one line command:
 
 ```bash
-cd ~/ && git clone https://github.com/TypQxQ/Query-Endstop-Continuesly-in-Klipper.git && bash ~/Query-Endstop-Continuesly-in-Klipper/install.sh```
+cd ~/ && git clone https://github.com/TypQxQ/Query-Endstop-Continuesly-in-Klipper.git && bash ~/Query-Endstop-Continuesly-in-Klipper/install.sh
+```
 
 ### Manual
 
