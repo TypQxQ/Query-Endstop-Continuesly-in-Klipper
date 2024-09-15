@@ -1,8 +1,11 @@
-# Query Endstop Continuesly in Klipper
+# Query Endstop Continuously in Klipper
 
 Klipper module that adds a G-code command so Klipper will pause until
 specified endstop is in selected state, triggered or not triggered.
 Alternativley it can query a specified amount of times.
+
+I have been told it is misspelled as "Continuesly" instead of "Continuously" but it's a bit late for changing this unfortunatley...
+I have changed it in the text at least now.
 
 ## Usage
 
@@ -13,7 +16,7 @@ QUERY_ENDSTOP_CONTINUESLY ENDSTOP= TRIGGERED= ATEMPTS=
  - ENDSTOP= The name of the endstop to query.
  - TRIGGERED= The state the endstop should be in. 0 or 1.
    Default is 1, Triggered.
- - ATEMPTS= The number of atempts to query the endstop. Default is continuesly.
+ - ATEMPTS= The number of atempts to query the endstop. Default is continuously.
 ```
 
 ## Examples
@@ -31,7 +34,7 @@ atempts or the endstop is untriggered before, the command will return and
 QUERY_ENDSTOP_CONTINUESLY ENDSTOP=probe TRIGGERED=0\
 ```
 
-This will query the endstop 'probe' continuesly until it is not triggered,
+This will query the endstop 'probe' continuously until it is not triggered,
 with a 1 second delay between each query. The command will not return until the
  endstop is not triggered.
 

@@ -38,14 +38,14 @@ class QueryEndstopContinuesly:
         "Usage: QUERY_ENDSTOP_CONTINUESLY ENDSTOP= TRIGGERED= ATEMPTS=\n"
         "ENDSTOP= The name of the endstop to query.\n"
         "TRIGGERED= The state the endstop should be in. 0 or 1. Default is 1, Triggered.\n"
-        "ATEMPTS= The number of atempts to query the endstop. Default is continuesly."
+        "ATEMPTS= The number of atempts to query the endstop. Default is continuously."
         "Example: QUERY_ENDSTOP_CONTINUESLY ENDSTOP=probe TRIGGERED=0 ATEMPTS=5\n"
         "This will query the endstop 'probe' 5 times until it is not triggered"
         ", with a 0.1 second delay between each query."
         "If the endstop is not triggered after 5 atempts, the command will return."
         "If the endstop is triggered before 5 atempts, the command will return."
         "Example: QUERY_ENDSTOP_CONTINUESLY ENDSTOP=probe TRIGGERED=0\n"
-        "This will query the endstop 'probe' continuesly until it is not triggered"
+        "This will query the endstop 'probe' continuously until it is not triggered"
         ", with a 1 second delay between each query."
         "The command will not return until the endstop is not triggered."
 
@@ -62,8 +62,8 @@ class QueryEndstopContinuesly:
         # The ATEMPTS parameter is the number of times the endstop should be queried.
         # Valid values are 1 or higher.
         # The endstop is queried every 0.1 second if a number of atempts is set.
-        # If the ATEMPTS parameter is not set, then it is assumed to be continuesly.
-        # When it is queried continuesly, the endstop is queried every 1 second.
+        # If the ATEMPTS parameter is not set, then it is assumed to be continuously.
+        # When it is queried continuously, the endstop is queried every 1 second.
         atempts = gcmd.get_int("ATEMPTS", -1, minval=1)
 
         self.query_endstop(endstop_name, should_be_triggered, atempts)
@@ -85,7 +85,7 @@ class QueryEndstopContinuesly:
         if endstop is None:
             raise self._printer.command_error(f"Unknown endstop '{endstop_name}'")
 
-        # If atempts is -1 then we are running continuesly.
+        # If atempts is -1 then we are running continuously.
         dwell = 0.1
         if atempts == -1:
             dwell = 1.0
